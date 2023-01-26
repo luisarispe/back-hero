@@ -6,7 +6,7 @@ const apiKey='7d5654bf5d0c877974e0289c0500caad';
 const hash='e3f183eddb4ae24bb27cb0fe455b4e30';
 const ts='1';
 
-exports.getAll= async (offset=0, nameStartsWith='') =>{
+const getAll= async (offset=0, nameStartsWith='') =>{
 
     const filtro=nameStartsWith? `&nameStartsWith=${nameStartsWith}`: '';
     const url = `${apiUrl}characters?apikey=${apiKey}&offset=${offset}${filtro}&hash=${hash}&ts=${ts}`;
@@ -18,9 +18,14 @@ exports.getAll= async (offset=0, nameStartsWith='') =>{
   }
 }
 
-exports.save=async (hero)=>{
+const getOne= async (id) =>{
+  const url = `${apiUrl}characters?apikey=${apiKey}&id=${id}&hash=${hash}&ts=${ts}`;
+  const response = await axios.get(url);
+  return response;
+}
+
+const save=async (hero)=>{
     try {
-      console.log(hero)
       const datosDB = new model(hero);
       await datosDB.save();
       return datosDB;
@@ -29,18 +34,33 @@ exports.save=async (hero)=>{
     }
 }
 
-exports.getOne=(id)=>{
+const getOneGroup= async (id)=>{
   try {
-    console.log(id);
+    const hero=await model.findOne({id_hero:id});
+    return hero;
   } catch (error) {
     throw error;
   }
 }
 
-exports.update=(id_hero,color,color_code)=>{
+const update= async (id, data)=>{
   try {
-    console.log(id);
+    await model.findByIdAndUpdate(id, data);
+    const hero =await model.findById(id);
+    return hero;
   } catch (error) {
     throw error;
   }
 }
+
+
+const deleteOne=async (id)=>{
+  try {
+    await model.deleteOne({ _id: id });
+    return 'El grupo fue eliminado';
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports={save, getAll,getOneGroup, deleteOne, update,getOne};
