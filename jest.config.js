@@ -1,0 +1,20 @@
+module.exports={
+    testMatch:[
+        "<rootDir>/test/**/*.spec.js",
+    ],
+    coverageThreshold:{
+        "global":{
+            "statements": 90
+        }
+    },
+    collectCoverageFrom:[
+        "<rootDir>/src/**/*.js",
+        "!<rootDir>/src/index.js",
+        "!<rootDir>/src/config/**",
+        "!<rootDir>/src/model/**",
+        "!<rootDir>/src/routes.js/**",
+        "!<rootDir>/src/utils/**",
+        "!**/*.validationSchema.js",
+        "!**/*.route.js",
+    ]
+}

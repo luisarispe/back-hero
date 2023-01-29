@@ -57,10 +57,9 @@ exports.getOne= async(req, res)=>{
         resourceURI: results[0].resourceURI,
         teamColor
       }
-      return res.status(200).send(heroe);;
+      return res.status(200).send(heroe);
     } catch (error) {
-      
-      if(error.response.status) return res.status(400).send('No existe heroe');
+      if(error.response) return res.status(400).send('No existe heroe');
       throw error;
     }
 }
@@ -86,7 +85,6 @@ exports.getAll= async (req, res) =>{
     }
     return {heroes,...res};
   } catch (error) {
-    console.log(error);
     throw error;
   }
 }

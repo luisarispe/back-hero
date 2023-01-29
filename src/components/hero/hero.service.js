@@ -26,8 +26,7 @@ const getOne= async (id) =>{
 
 const save=async (hero)=>{
     try {
-      const datosDB = new model(hero);
-      await datosDB.save();
+      const datosDB=await model.create(hero);
       return datosDB;
     } catch (error) {
         throw error;
